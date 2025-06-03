@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 應用程式名稱 -->
+    <string name="app_name">Do It!</string>
+
+    <!-- 主畫面 -->
+    <string name="main_title">Do It!</string>
+    <string name="total_tasks">總任務</string>
+    <string name="completed_tasks">已完成</string>
+    <string name="pending_tasks">待完成</string>
+    <string name="my_tasks">我的任務</string>
+    <string name="add_task">新增任務</string>
+
+    <!-- 空狀態 -->
+    <string name="empty_tasks_title">還沒有任務</string>
+    <string name="empty_tasks_subtitle">點擊 + 按鈕新增第一個任務</string>
+
+    <!-- 任務相關 -->
+    <string name="task_title">任務標題</string>
+    <string name="task_description">任務描述 (選填)</string>
+    <string name="task_completed">已完成</string>
+    <string name="task_pending">待完成</string>
+
+    <!-- 對話框 -->
+    <string name="dialog_add_task_title">新增任務</string>
+    <string name="dialog_edit_task_title">編輯任務</string>
+    <string name="dialog_delete_task_title">刪除任務</string>
+    <string name="dialog_delete_task_message">確定要刪除這個任務嗎？</string>
+    <string name="dialog_delete_all_tasks_title">刪除所有任務</string>
+    <string name="dialog_delete_all_tasks_message">確定要刪除所有任務嗎？此動作無法復原。</string>
+
+    <!-- 按鈕 -->
+    <string name="btn_add">新增</string>
+    <string name="btn_save">儲存</string>
+    <string name="btn_cancel">取消</string>
+    <string name="btn_delete">刪除</string>
+    <string name="btn_edit">編輯</string>
+    <string name="btn_confirm">確認</string>
+
+    <!-- 菜單 -->
+    <string name="menu_delete_all">刪除所有任務</string>
+    <string name="menu_settings">設定</string>
+    <string name="menu_about">關於</string>
+
+    <!-- 任務菜單 -->
+    <string name="task_menu_edit">編輯</string>
+    <string name="task_menu_delete">刪除</string>
+    <string name="task_menu_mark_completed">標記為完成</string>
+    <string name="task_menu_mark_pending">標記為待完成</string>
+
+    <!-- 提示訊息 -->
+    <string name="toast_task_added">任務已新增</string>
+    <string name="toast_task_updated">任務已更新</string>
+    <string name="toast_task_deleted">任務已刪除</string>
+    <string name="toast_task_completed">任務已完成</string>
+    <string name="toast_task_uncompleted">任務已標記為待完成</string>
+    <string name="toast_all_tasks_deleted">所有任務已刪除</string>
+
+    <!-- 錯誤訊息 -->
+    <string name="error_task_title_empty">請輸入任務標題</string>
+    <string name="error_task_title_too_long">任務標題過長</string>
+    <string name="error_task_description_too_long">任務描述過長</string>
+    <string name="error_database">資料庫錯誤</string>
+
+    <!-- 內容描述 (無障礙) -->
+    <string name="cd_add_task">新增任務</string>
+    <string name="cd_task_menu">任務選項</string>
+    <string name="cd_task_complete">標記完成</string>
+    <string name="cd_empty_state">沒有任務</string>
+
+    <!-- 時間格式 -->
+    <string name="time_format_today">今天 %s</string>
+    <string name="time_format_yesterday">昨天 %s</string>
+    <string name="time_format_date">%s %s</string>
+</resources>
