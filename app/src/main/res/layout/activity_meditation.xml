@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:fitsSystemWindows="true"
+    tools:context=".MeditationActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_color"
+        android:fitsSystemWindows="true"
+        app:elevation="4dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary_color"
+            app:titleTextColor="@color/white"
+            app:navigationIconTint="@color/white" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!-- 圓形進度條和時間顯示 -->
+        <RelativeLayout
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:layout_marginBottom="32dp">
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/circle_progress_background"
+                android:progressDrawable="@drawable/circle_progress"
+                android:progress="0"
+                android:max="100" />
+
+            <TextView
+                android:id="@+id/tv_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="05:00"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:textColor="@color/primary_color"
+                android:fontFamily="monospace" />
+
+        </RelativeLayout>
+
+        <!-- 時間選擇按鈕 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="32dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_1_min"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:text="1分"
+                android:textSize="14sp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/primary_color"
+                app:strokeColor="@color/primary_color" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_3_min"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="3分"
+                android:textSize="14sp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/primary_color"
+                app:strokeColor="@color/primary_color" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_5_min"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="5分"
+                android:textSize="14sp"
+                android:backgroundTint="@color/primary_color"
+                android:textColor="@color/white"
+                app:strokeColor="@color/primary_color" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_10_min"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:text="10分"
+                android:textSize="14sp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/primary_color"
+                app:strokeColor="@color/primary_color" />
+
+        </LinearLayout>
+
+        <!-- 控制按鈕 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btn_pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="暫停"
+                android:src="@android:drawable/ic_media_pause"
+                app:backgroundTint="@color/warning_color"
+                app:tint="@color/white"
+                android:enabled="false" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btn_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="開始"
+                android:src="@android:drawable/ic_media_play"
+                app:backgroundTint="@color/primary_color"
+                app:tint="@color/white" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btn_reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="重置"
+                android:src="@android:drawable/ic_menu_revert"
+                app:backgroundTint="@color/text_secondary"
+                app:tint="@color/white" />
+
+        </LinearLayout>
+
+        <!-- 靜心提示 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="深呼吸，專注當下"
+            android:textSize="16sp"
+            android:textColor="@color/text_secondary"
+            android:alpha="0.8" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
