@@ -6,16 +6,18 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.doit2.data.model.Task
+import com.example.doit2.data.model.ModuleSetting
 
 @Database(
-    entities = [Task::class],
-    version = 1,
+    entities = [Task::class, ModuleSetting::class],
+    version = 2,  // 版本號從 1 升級到 2
     exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun taskDao(): TaskDao
+    abstract fun moduleSettingDao(): ModuleSettingDao
 
     companion object {
         @Volatile
@@ -27,7 +29,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "doit_database"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()  // 開發階段允許刪除重建
+                    .build()
                 INSTANCE = instance
                 instance
             }
