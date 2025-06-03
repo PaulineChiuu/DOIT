@@ -18,6 +18,7 @@ import com.example.doit2.ui.viewmodel.ModuleSettingViewModel
 import com.example.doit2.ui.viewmodel.TaskViewModel
 import com.example.doit2.ui.adapter.ModuleAdapter
 import android.content.Intent
+import com.example.doit2.ui.viewmodel.AchievementViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var taskAdapter: TaskAdapter
     private val moduleSettingViewModel: ModuleSettingViewModel by viewModels()
     private lateinit var moduleAdapter: ModuleAdapter
+    private val achievementViewModel: AchievementViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         initializeModules()
         setupObservers()
         setupClickListeners()
+        initializeAchievementSystem()
     }
 
     private fun setupModuleRecyclerView() {
@@ -103,6 +106,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun initializeAchievementSystem() {
+        // 初始化成就系統
+        taskViewModel.getAchievementManager().initialize()
+
+        // 檢查模組使用（如果成就模組已啟用）
+        achievementViewModel.getAchievementManager().checkModuleUsage("achievements")
+    }
+
     private fun updateModulesUI(enabledModules: List<ModuleSetting>) {
         if (enabledModules.isNotEmpty()) {
             binding.layoutModulesSection.visibility = View.VISIBLE
@@ -131,20 +142,30 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "任務目標功能即將推出", Toast.LENGTH_SHORT).show()
             }
             "calendar" -> {
-                Toast.makeText(this, "日曆追蹤功能即將推出", Toast.LENGTH_SHORT).show()
+                // 跳轉到日曆頁面
+                val intent = Intent(this, CalendarActivity::class.java)
+                startActivity(intent)
+                // 記錄模組使用
+                achievementViewModel.getAchievementManager().checkModuleUsage("calendar")
             }
             "self_talk" -> {
                 Toast.makeText(this, "自我對話功能即將推出", Toast.LENGTH_SHORT).show()
             }
             "achievements" -> {
-                Toast.makeText(this, "成就獎勵功能即將推出", Toast.LENGTH_SHORT).show()
+                // 跳轉到成就頁面
+                val intent = Intent(this, AchievementsActivity::class.java)
+                startActivity(intent)
+                // 記錄模組使用
+                achievementViewModel.getAchievementManager().checkModuleUsage("achievements")
             }
             "meditation" -> {
+                achievementViewModel.getAchievementManager().checkModuleUsage("meditation")
                 // 跳轉到靜心頁面
                 val intent = Intent(this, MeditationActivity::class.java)
                 startActivity(intent)
             }
             "music" -> {
+                achievementViewModel.getAchievementManager().checkModuleUsage("music")
                 val intent = Intent(this, MusicActivity::class.java)
                 startActivity(intent)
             }
