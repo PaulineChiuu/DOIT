@@ -83,6 +83,7 @@ class ModuleSettingsActivity : AppCompatActivity() {
             "tasks_goal" -> "任務目標"
             "calendar" -> "日曆追蹤"
             "self_talk" -> "自我對話"
+            "pomodoro" -> "番茄鐘"
             "achievements" -> "成就獎勵"
             "meditation" -> "靜心倒數"
             "music" -> "習慣配樂"

@@ -70,10 +70,15 @@ class ModuleSettingsAdapter(
                     description = "記錄想法和反思心得",
                     icon = android.R.drawable.ic_menu_edit
                 )
+                "pomodoro" -> ModuleInfo(
+                    name = "番茄鐘",
+                    description = "專注工作配合休息的時間管理技巧",
+                    icon = android.R.drawable.ic_menu_rotate
+                )
                 "achievements" -> ModuleInfo(
                     name = "成就獎勵",
                     description = "完成任務獲得積分和獎勵",
-                    icon = android.R.drawable.ic_menu_preferences
+                    icon = android.R.drawable.ic_menu_myplaces
                 )
                 "meditation" -> ModuleInfo(
                     name = "靜心倒數",

@@ -175,6 +175,38 @@ class AchievementRepository(
                 iconRes = android.R.drawable.ic_menu_set_as,
                 points = 80,
                 category = "special"
+            ),
+            Achievement(
+                id = "pomodoro_first",
+                title = "番茄初體驗",
+                description = "完成第一個番茄鐘專注時間",
+                iconRes = android.R.drawable.ic_menu_recent_history,
+                points = 20,
+                category = "pomodoro"
+            ),
+            Achievement(
+                id = "pomodoro_10_sessions",
+                title = "專注新手",
+                description = "完成10個番茄鐘專注時間",
+                iconRes = android.R.drawable.ic_menu_agenda,
+                points = 100,
+                category = "pomodoro"
+            ),
+            Achievement(
+                id = "pomodoro_master",
+                title = "番茄大師",
+                description = "完成50個番茄鐘專注時間",
+                iconRes = android.R.drawable.ic_menu_manage,
+                points = 300,
+                category = "pomodoro"
+            ),
+            Achievement(
+                id = "daily_5_pomodoros",
+                title = "今日專注王",
+                description = "單日完成5個番茄鐘",
+                iconRes = android.R.drawable.ic_menu_today,
+                points = 80,
+                category = "pomodoro"
             )
         )
     }

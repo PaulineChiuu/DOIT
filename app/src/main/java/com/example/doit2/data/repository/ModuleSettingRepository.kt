@@ -41,7 +41,8 @@ class ModuleSettingRepository(private val moduleSettingDao: ModuleSettingDao) {
             ModuleSetting("self_talk", false, 2),
             ModuleSetting("achievements", false, 3),
             ModuleSetting("meditation", false, 4),
-            ModuleSetting("music", false, 5)
+            ModuleSetting("music", false, 5),
+            ModuleSetting("pomodoro", false, 6)
         )
 
         // 檢查是否已初始化，避免重複插入
