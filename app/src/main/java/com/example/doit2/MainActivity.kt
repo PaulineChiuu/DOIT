@@ -19,6 +19,8 @@ import com.example.doit2.ui.viewmodel.TaskViewModel
 import com.example.doit2.ui.adapter.ModuleAdapter
 import android.content.Intent
 import com.example.doit2.ui.viewmodel.AchievementViewModel
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,10 +40,46 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
         setupModuleRecyclerView()
         initializeModules()
+        forceInitializeModules()
         setupObservers()
         setupClickListeners()
         initializeAchievementSystem()
     }
+
+    private fun forceInitializeModules() {
+        lifecycleScope.launch {
+            android.util.Log.d("MainActivity", "強制初始化模組")
+
+            // 強制插入所有預設模組
+            val defaultModules = listOf(
+                ModuleSetting("tasks_goal", false, 0),
+                ModuleSetting("calendar", false, 1),
+                ModuleSetting("self_talk", false, 2),
+                ModuleSetting("achievements", false, 3),
+                ModuleSetting("meditation", false, 4),
+                ModuleSetting("music", false, 5),
+                ModuleSetting("pomodoro", false, 6)
+            )
+
+            defaultModules.forEach { module ->
+                try {
+                    moduleSettingViewModel.updateModuleSetting(module)
+                    android.util.Log.d("MainActivity", "插入模組: ${module.moduleName}")
+                } catch (e: Exception) {
+                    android.util.Log.e("MainActivity", "插入模組失敗: ${module.moduleName}", e)
+                }
+            }
+
+            // 啟用日曆模組來測試顯示
+            try {
+                moduleSettingViewModel.updateModuleEnabled("calendar", true)
+                android.util.Log.d("MainActivity", "啟用成就模組")
+            } catch (e: Exception) {
+                android.util.Log.e("MainActivity", "啟用模組失敗", e)
+            }
+        }
+    }
+
 
     private fun setupModuleRecyclerView() {
         moduleAdapter = ModuleAdapter { moduleSetting ->
@@ -102,6 +140,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         moduleSettingViewModel.enabledModuleSettings.observe(this) { enabledModules ->
+            android.util.Log.d("MainActivity", "啟用的模組數量: ${enabledModules.size}")
+            enabledModules.forEach { module ->
+                android.util.Log.d("MainActivity", "模組: ${module.moduleName}, 啟用: ${module.isEnabled}")
+            }
             updateModulesUI(enabledModules)
         }
     }
@@ -139,7 +181,10 @@ class MainActivity : AppCompatActivity() {
     private fun onModuleCardClick(moduleSetting: ModuleSetting) {
         when (moduleSetting.moduleName) {
             "tasks_goal" -> {
-                Toast.makeText(this, "任務目標功能即將推出", Toast.LENGTH_SHORT).show()
+                // 跳轉到任務目標頁面
+                val intent = Intent(this, TaskGoalActivity::class.java)
+                startActivity(intent)
+                achievementViewModel.getAchievementManager().checkModuleUsage("tasks_goal")
             }
             "calendar" -> {
                 // 跳轉到日曆頁面
@@ -149,7 +194,10 @@ class MainActivity : AppCompatActivity() {
                 achievementViewModel.getAchievementManager().checkModuleUsage("calendar")
             }
             "self_talk" -> {
-                Toast.makeText(this, "自我對話功能即將推出", Toast.LENGTH_SHORT).show()
+                // 跳轉到自我對話頁面
+                val intent = Intent(this, SelfTalkActivity::class.java)
+                startActivity(intent)
+                achievementViewModel.getAchievementManager().checkModuleUsage("self_talk")
             }
             "achievements" -> {
                 // 跳轉到成就頁面
@@ -168,6 +216,13 @@ class MainActivity : AppCompatActivity() {
                 achievementViewModel.getAchievementManager().checkModuleUsage("music")
                 val intent = Intent(this, MusicActivity::class.java)
                 startActivity(intent)
+            }
+            "pomodoro" -> {
+                // 跳轉到番茄鐘頁面
+                val intent = Intent(this, PomodoroActivity::class.java)
+                startActivity(intent)
+                // 記錄模組使用
+                achievementViewModel.getAchievementManager().checkModuleUsage("pomodoro")
             }
         }
     }

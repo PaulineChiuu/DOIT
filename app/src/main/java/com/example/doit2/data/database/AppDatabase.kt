@@ -12,10 +12,12 @@ import com.example.doit2.data.model.ModuleSetting
 import com.example.doit2.data.model.Achievement
 import com.example.doit2.data.model.UserStats
 import com.example.doit2.data.model.DailyRecord
+import com.example.doit2.data.model.PomodoroSession
+import com.example.doit2.data.model.PomodoroSettings
 
 @Database(
-    entities = [Task::class, ModuleSetting::class, Achievement::class, UserStats::class, DailyRecord::class],
-    version = 4,  // 版本號從 3 升級到 4
+    entities = [Task::class, ModuleSetting::class, Achievement::class, UserStats::class, DailyRecord::class, PomodoroSession::class, PomodoroSettings::class],
+    version = 5,  // 版本號從 4 升級到 5
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -26,6 +28,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun achievementDao(): AchievementDao
     abstract fun userStatsDao(): UserStatsDao
     abstract fun dailyRecordDao(): DailyRecordDao
+    abstract fun pomodoroDao(): PomodoroDao
 
     companion object {
         @Volatile
@@ -86,7 +89,7 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        // 資料庫遷移：從版本 3 到版本 4 (新增日曆追蹤)
+        // 資料庫遷移：從版本 3 到版本 4
         private val MIGRATION_3_4 = object : Migration(3, 4) {
             override fun migrate(db: SupportSQLiteDatabase) {
                 try {
@@ -124,6 +127,59 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        // 資料庫遷移：從版本 4 到版本 5 (新增番茄鐘)
+        private val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                try {
+                    // 創建 pomodoro_sessions 表
+                    db.execSQL("""
+                        CREATE TABLE IF NOT EXISTS pomodoro_sessions (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                            sessionType TEXT NOT NULL,
+                            plannedDuration INTEGER NOT NULL,
+                            actualDuration INTEGER NOT NULL,
+                            isCompleted INTEGER NOT NULL DEFAULT 0,
+                            startTime INTEGER NOT NULL,
+                            endTime INTEGER,
+                            notes TEXT NOT NULL DEFAULT '',
+                            taskId INTEGER,
+                            createdAt INTEGER NOT NULL
+                        )
+                    """)
+
+                    // 創建 pomodoro_settings 表
+                    db.execSQL("""
+                        CREATE TABLE IF NOT EXISTS pomodoro_settings (
+                            id INTEGER PRIMARY KEY NOT NULL DEFAULT 1,
+                            focusDuration INTEGER NOT NULL DEFAULT 25,
+                            shortBreakDuration INTEGER NOT NULL DEFAULT 5,
+                            longBreakDuration INTEGER NOT NULL DEFAULT 15,
+                            sessionsUntilLongBreak INTEGER NOT NULL DEFAULT 4,
+                            enableNotifications INTEGER NOT NULL DEFAULT 1,
+                            enableVibration INTEGER NOT NULL DEFAULT 1,
+                            autoStartBreak INTEGER NOT NULL DEFAULT 0,
+                            autoStartFocus INTEGER NOT NULL DEFAULT 0
+                        )
+                    """)
+
+                    // 插入預設設定
+                    db.execSQL("""
+                        INSERT OR IGNORE INTO pomodoro_settings (
+                            id, focusDuration, shortBreakDuration, longBreakDuration,
+                            sessionsUntilLongBreak, enableNotifications, enableVibration,
+                            autoStartBreak, autoStartFocus
+                        ) VALUES (
+                            1, 25, 5, 15, 4, 1, 1, 0, 0
+                        )
+                    """)
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    throw e
+                }
+            }
+        }
+
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -131,7 +187,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "doit_database"
                 )
-                    .addMigrations(MIGRATION_2_3, MIGRATION_3_4)  // 添加兩個遷移策略
+                    .addMigrations(MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)  // 添加所有遷移策略
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance

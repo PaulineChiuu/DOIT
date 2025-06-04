@@ -181,7 +181,7 @@ class AchievementManager(
     /**
      * 解鎖成就
      */
-    private suspend fun unlockAchievement(achievementId: String) {
+    suspend fun unlockAchievement(achievementId: String) {
         val isNewlyUnlocked = repository.unlockAchievement(achievementId)
         if (isNewlyUnlocked) {
             val achievement = repository.getAchievementById(achievementId)
@@ -299,4 +299,39 @@ class AchievementManager(
             false
         }
     }
+
+    /**
+     * 記錄番茄鐘使用
+     */
+    fun checkPomodoroCompletion() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val userStats = repository.getUserStatsSync() ?: return@launch
+
+            // 更新番茄鐘統計
+            repository.incrementPomodoroSessions()
+
+            // 獲取更新後的統計
+            val updatedStats = repository.getUserStatsSync() ?: return@launch
+            val totalPomodoros = updatedStats.pomodoroSessions
+
+            // 檢查番茄鐘成就
+            checkPomodoroAchievements(totalPomodoros)
+
+            // 更新等級
+            updateUserLevel()
+        }
+    }
+
+    /**
+     * 檢查番茄鐘相關成就
+     */
+    private suspend fun checkPomodoroAchievements(totalPomodoros: Int) {
+        when (totalPomodoros) {
+            1 -> unlockAchievement("pomodoro_first")
+            10 -> unlockAchievement("pomodoro_10_sessions")
+            50 -> unlockAchievement("pomodoro_master")
+            100 -> unlockAchievement("pomodoro_legend")
+        }
+    }
+
 }

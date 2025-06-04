@@ -47,9 +47,10 @@ class ModuleAdapter(
                 "tasks_goal" -> "任務目標" to android.R.drawable.ic_menu_agenda
                 "calendar" -> "日曆追蹤" to android.R.drawable.ic_menu_month
                 "self_talk" -> "自我對話" to android.R.drawable.ic_menu_edit
-                "achievements" -> "成就獎勵" to android.R.drawable.ic_menu_preferences
+                "achievements" -> "成就獎勵" to android.R.drawable.ic_menu_myplaces
                 "meditation" -> "靜心倒數" to android.R.drawable.ic_menu_recent_history
                 "music" -> "習慣配樂" to android.R.drawable.ic_media_play
+                "pomodoro" -> "番茄鐘" to android.R.drawable.ic_menu_rotate
                 else -> "未知模組" to android.R.drawable.ic_menu_info_details
             }
         }
