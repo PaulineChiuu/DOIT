@@ -13,6 +13,7 @@
         android:theme="@style/Theme.DoIt"
         tools:targetApi="31">
 
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -66,17 +67,24 @@
             android:exported="false"
             android:parentActivityName=".MainActivity" />
 
+
+
         <activity
             android:name=".SelfTalkActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"
             android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".TaiwanTourMapActivity" />
 
         <activity
             android:name=".TaskGoalActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.TaiwanTourMapActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
 
     </application>
 

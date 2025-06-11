@@ -51,9 +51,11 @@ class ModuleAdapter(
                 "meditation" -> "靜心倒數" to android.R.drawable.ic_menu_recent_history
                 "music" -> "習慣配樂" to android.R.drawable.ic_media_play
                 "pomodoro" -> "番茄鐘" to android.R.drawable.ic_menu_rotate
+                "taiwan_tour_map" -> "台灣旅圖" to android.R.drawable.ic_dialog_map // ✅ 新增這行
                 else -> "未知模組" to android.R.drawable.ic_menu_info_details
             }
         }
+
     }
 
     class ModuleDiffCallback : DiffUtil.ItemCallback<ModuleSetting>() {

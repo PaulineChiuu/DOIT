@@ -1,13 +1,15 @@
 package com.example.doit2.ui.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.doit2.R
 import com.example.doit2.data.model.ModuleSetting
 import com.example.doit2.databinding.ItemModuleSettingBinding
+import com.example.doit2.TaiwanTourMapActivity
+
 
 class ModuleSettingsAdapter(
     private val onModuleToggle: (ModuleSetting, Boolean) -> Unit
@@ -38,7 +40,7 @@ class ModuleSettingsAdapter(
             binding.tvModuleDescription.text = moduleInfo.description
             binding.ivModuleIcon.setImageResource(moduleInfo.icon)
 
-            // 設定開關狀態（暫時移除監聽器避免觸發回調）
+            // 設定開關狀態
             binding.switchModule.setOnCheckedChangeListener(null)
             binding.switchModule.isChecked = moduleSetting.isEnabled
 
@@ -47,14 +49,22 @@ class ModuleSettingsAdapter(
                 onModuleToggle(moduleSetting, isChecked)
             }
 
-            // 整個卡片點擊也可以切換開關
+            // 卡片點擊：台灣旅圖跳頁，其他模組切換開關
             binding.root.setOnClickListener {
-                binding.switchModule.toggle()
+                if (moduleSetting.moduleName == "taiwan_tour_map") {
+                    val context = binding.root.context
+                    val intent = Intent(context, TaiwanTourMapActivity::class.java)
+                    context.startActivity(intent)
+                }
+                else {
+                    binding.switchModule.toggle()
+                }
             }
         }
 
         private fun getModuleInfo(moduleName: String): ModuleInfo {
             return when (moduleName) {
+
                 "tasks_goal" -> ModuleInfo(
                     name = "任務目標",
                     description = "設定具體目標並追蹤進度",
@@ -90,6 +100,12 @@ class ModuleSettingsAdapter(
                     description = "專注工作的背景音樂",
                     icon = android.R.drawable.ic_media_play
                 )
+                "taiwan_tour_map" -> ModuleInfo(
+                    name = "台灣旅圖",
+                    description = "累積專注時間，逐站解鎖地標環島旅程",
+                    icon = android.R.drawable.ic_dialog_map
+                )
+
                 else -> ModuleInfo(
                     name = "未知模組",
                     description = "未知的功能模組",

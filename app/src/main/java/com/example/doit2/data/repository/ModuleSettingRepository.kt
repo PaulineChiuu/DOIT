@@ -22,6 +22,10 @@ class ModuleSettingRepository(private val moduleSettingDao: ModuleSettingDao) {
         moduleSettingDao.insertModuleSetting(moduleSetting)
     }
 
+    suspend fun insertModuleSettings(moduleSettings: List<ModuleSetting>) {
+        moduleSettingDao.insertModuleSettings(moduleSettings)
+    }
+
     suspend fun updateModuleSetting(moduleSetting: ModuleSetting) {
         moduleSettingDao.updateModuleSetting(moduleSetting)
     }
@@ -34,6 +38,7 @@ class ModuleSettingRepository(private val moduleSettingDao: ModuleSettingDao) {
         moduleSettingDao.updateModuleDisplayOrder(moduleName, displayOrder)
     }
 
+    // 初始化預設模組，只執行一次
     suspend fun initializeDefaultModules() {
         val defaultModules = listOf(
             ModuleSetting("tasks_goal", false, 0),
@@ -42,12 +47,12 @@ class ModuleSettingRepository(private val moduleSettingDao: ModuleSettingDao) {
             ModuleSetting("achievements", false, 3),
             ModuleSetting("meditation", false, 4),
             ModuleSetting("music", false, 5),
-            ModuleSetting("pomodoro", false, 6)
+            ModuleSetting("pomodoro", false, 6),
+            ModuleSetting("taiwan_tour_map", false, 7)
         )
 
-        // 檢查是否已初始化，避免重複插入
-        val existingModule = moduleSettingDao.getModuleSetting("tasks_goal")
-        if (existingModule == null) {
+        val isInitialized = moduleSettingDao.getModuleSetting("tasks_goal") != null
+        if (!isInitialized) {
             moduleSettingDao.insertModuleSettings(defaultModules)
         }
     }
