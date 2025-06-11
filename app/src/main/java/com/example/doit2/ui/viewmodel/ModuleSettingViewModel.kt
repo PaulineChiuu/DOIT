@@ -21,11 +21,7 @@ class ModuleSettingViewModel(application: Application) : AndroidViewModel(applic
         allModuleSettings = repository.getAllModuleSettings()
         enabledModuleSettings = repository.getEnabledModuleSettings()
 
-        // 初始化預設模組
-        initializeDefaultModules()
-    }
-
-    private fun initializeDefaultModules() {
+        // 初始化預設模組 (要在 coroutine 中呼叫 suspend 函式)
         viewModelScope.launch {
             repository.initializeDefaultModules()
         }

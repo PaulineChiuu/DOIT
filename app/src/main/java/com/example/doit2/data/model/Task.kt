@@ -8,7 +8,7 @@ import java.util.Date
 
 @Entity(tableName = "tasks")
 @TypeConverters(Converters::class)
-data class Task(
+data class  Task(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val title: String,

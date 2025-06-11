@@ -126,7 +126,14 @@ class AchievementManager(
                     unlockAchievement("music_first")
                     repository.incrementMusicUsage()
                 }
+                "pomodoro" -> {
+                    unlockAchievement("pomodoro_module_first")
+                }
+                "journey" -> {
+                    unlockAchievement("journey_module_first")
+                }
             }
+
 
             // 記錄模組使用
             recordModuleUsage(moduleId)
@@ -172,7 +179,8 @@ class AchievementManager(
         val unlockedModules = userStats.modulesUnlocked.split(",").filter { it.isNotEmpty() }
 
         // 檢查是否有6個模組：tasks_goal, calendar, self_talk, achievements, meditation, music
-        val allModules = setOf("tasks_goal", "calendar", "self_talk", "achievements", "meditation", "music")
+        val allModules = setOf("tasks_goal", "calendar", "self_talk", "achievements", "meditation", "music", "pomodoro", "journey")
+
         if (unlockedModules.toSet().containsAll(allModules)) {
             unlockAchievement("all_modules")
         }

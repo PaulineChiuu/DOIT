@@ -87,6 +87,8 @@ class ModuleSettingsActivity : AppCompatActivity() {
             "achievements" -> "成就獎勵"
             "meditation" -> "靜心倒數"
             "music" -> "習慣配樂"
+            "taiwan_tour_map"-> "台灣旅圖"
+
             else -> "未知模組"
         }
     }

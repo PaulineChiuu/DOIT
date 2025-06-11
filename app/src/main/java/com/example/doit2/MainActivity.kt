@@ -176,6 +176,8 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ModuleSettingsActivity::class.java)
             startActivity(intent)
         }
+
+
     }
 
     private fun onModuleCardClick(moduleSetting: ModuleSetting) {
@@ -310,11 +312,17 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.action_settings -> {
-                // TODO: 實作設定頁面
                 Toast.makeText(this, "設定功能即將推出", Toast.LENGTH_SHORT).show()
                 true
             }
+            R.id.action_tour_map -> {
+                val intent = Intent(this, TaiwanTourMapActivity::class.java)
+                startActivity(intent)
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 }
